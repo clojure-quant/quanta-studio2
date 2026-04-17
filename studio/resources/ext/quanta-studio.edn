@@ -1,0 +1,11 @@
+{:extension/name :quanta-studio
+ :cljs/module :quanta-studio
+ :cljs/depends-on #{:main :reval-ui}
+ :cljs/namespace [quanta.studio.app]
+ :cljs/ns-bindings {'quanta.studio.app {'routes quanta.studio.app/routes
+                                        'wrap quanta.studio.app/wrap}}
+ 
+ ; runtime 
+ :cljs-routes-reitit quanta.studio.app/routes
+;
+ }

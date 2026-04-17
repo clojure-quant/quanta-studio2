@@ -1,0 +1,88 @@
+{:modular (modular.system/modular-env)  ; {:profile "jetty"  :config ["demo.edn" "secrets.edn"]}
+ :components
+ {:config1 {:start (modular.config/load-config! (:config #ref [:modular]))}
+  :config {:start (deref (clip/ref :config1))}
+  :timbre {:start (modular.log/timbre-config! (:timbre/clj (clip/ref :config)))}
+  :exts {:start (extension/discover (:extension (clip/ref :config)))}
+
+  ;; extend transit handler and configure dali converters
+  :tick-transit-handler {:start (transit.type.tick/add-tick-handlers!)}
+  :techml-transit-handler {:start (cquant.transit.techml/add-techml-dataset-handlers!)}
+  :techml-dali-converter {:start (rtable.default.dali-converter/add-techml-dali-converter)}
+
+
+  ;; reval
+  
+  :reval {:start (reval.config/configure-reval (:reval (clip/ref :config)))}
+
+  ;; quanta
+  
+  ;; BAR DB + MARKET DATA 
+  
+  :asset-db {:start (quanta.market.asset.datahike/start-asset-db
+                     (modular.env/env "${QUANTASTORE}/assetdb"))}
+
+  :bar-db-duck {; duck-db db has .ddb extension
+                :start (quanta.bar.db.duck/start-bardb-duck (modular.env/env "${QUANTASTORE}/bardb/eodhd.ddb"))
+                :stop (quanta.bar.db.duck/stop-bardb-duck this)}
+
+  :bardb-nippy-eodhd {:start (quanta.bar.db.nippy/start-bardb-nippy
+                              (modular.env/env "${QUANTASTORE}/bardb/eodhd-nippy/"))}
+
+  :ss {:start (quanta.bar.split.service/start-split-service {:bardb (clip/ref :bar-db-duck)})}
+  :bar-db-ss (:barsource (clip/ref :ss))
+
+  :tradingview {:start (assoc (:tradingview (clip/ref :config))
+                              :charts-path (modular.env/env "${QUANTASTORE}/tv/chart/") 
+                              :template-path (modular.env/env "${QUANTASTORE}/tv/template/") 
+                              :marks-path (modular.env/env "${QUANTASTORE}/tv/mark/") 
+                              :events-path (modular.env/env "${QUANTASTORE}/tv/events/"))}
+  
+  :eodhd-token {:start (:eodhd (clip/ref :config))}
+  :eodhd {:start (quanta.market.adapter.eodhd.ds/create-import-eodhd (clip/ref :eodhd-token))}
+  
+  :quotes {:start (quanta.market.quote/quote-manager-start (:quotes (clip/ref :config)))}
+
+
+  :ctx {:start {:asset-db (clip/ref :asset-db)
+                :bar-db  (clip/ref :bar-db-ss)
+                :bar-db-raw (clip/ref :bar-db-duck)
+                :eodhd (clip/ref :eodhd)
+                :eodhd-token (clip/ref :eodhd-token)
+                :tradingview (clip/ref :tradingview)}}
+
+  ;; webserver
+  :token {:start (token.core/start-token-service
+                  {:users {}
+                   :secret "AbHzj834ri9"
+                   :store-path ".gorilla/tokenstore"
+                   :providers {}
+                   :auth-expiry 604800})}
+  :clj {:start (clj-service.core/start-clj-services
+                {:exts (clip/ref :exts)
+                 :env (clip/ref :ctx)})}
+  :webly {:start (webly.spa/start-webly
+                  {:exts (clip/ref :exts)
+                   :ctx (assoc (clip/ref :ctx)
+                               :token (clip/ref :token)
+                               :clj (clip/ref :clj)
+                               :flowy (flowy.reflower/start-reflower (clip/ref :clj)))}
+                  (clip/ref :config)
+                  (:profile #ref [:modular])
+                  (:version #ref [:modular]))
+          :stop (webly.spa/stop-webly this)}
+
+  ;; nrepl
+  
+  :nrepl {:start (nrepl.server/start-server
+                  :bind "0.0.0.0"
+                  :port 9100
+                  :middleware cider.nrepl.middleware/cider-middleware
+                  :handler cider.nrepl/cider-nrepl-handler)
+          :stop (.close this)}
+
+
+
+
+;  
+  }}

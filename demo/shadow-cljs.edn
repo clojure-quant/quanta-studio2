@@ -1,0 +1,88 @@
+;; auto-generated
+;; saved on 2026-04-17T22:46:04.244740154Z
+{:cache-root ".shadow-cljs",
+ :verbose true,
+ :lein false,
+ :dev-http {8000 {:handler shadowx.core/ring-handler}},
+ :http {:port 8001, :host "0.0.0.0"},
+ :nrepl {:port 8002},
+ :builds {:app {:target :browser,
+                :module-loader true,
+                :module-loader-init false,
+                :output-dir ".gorilla/public/default",
+                :asset-path "/r/default",
+                :modules {:init {:entries [shadowx.core],
+                                 :depends-on #{}},
+                          :quanta-studio {:entries [quanta.studio.app],
+                                          :depends-on #{:reval-ui
+                                                        :main}},
+                          :main {:entries [flowy.config
+                                           frontend.css
+                                           rtable.viewer.echarts
+                                           rtable.viewer.vega
+                                           rtable.viewer.aggrid
+                                           rtable.transform.aggrid
+                                           rtable.viewer.cheetah
+                                           rtable.transform.cheetah
+                                           paint.series
+                                           rtable.viewer.rtable
+                                           rtable.transform.rtable
+                                           rtable.viewer.pixi
+                                           rtable.transform.pixi
+                                           rtable.viewer.highcharts-render
+                                           rtable.viewer.highcharts
+                                           rtable.transform.highcharts
+                                           rtable.format.date
+                                           rtable.format.number
+                                           rtable.viewer.plotly
+                                           rtable.core
+                                           rtable.table
+                                           rtable.cell
+                                           rtable.sort
+                                           rtable.rtable
+                                           token.core
+                                           router.core
+                                           router.service
+                                           router.app
+                                           webly.spa
+                                           modular.log
+                                           cquant.transit.techml
+                                           cquant.config
+                                           tech.v3.dataset
+                                           cquant.tmlds
+                                           tick.transit
+                                           dali.spec
+                                           dali.transform.load
+                                           dali.viewer.hiccup
+                                           dali.viewer.text
+                                           dali.viewer.exception
+                                           dali.flowy.tap
+                                           dali.encoding.config
+                                           ui.highlightjs
+                                           options.core
+                                           options.edit],
+                                 :depends-on #{:init}},
+                          :reval-ui {:entries [dali.type.util
+                                               dali.type.converter
+                                               dali.type.cljs
+                                               reval.kernel.protocol
+                                               reval.dali.viewer.notebook
+                                               reval.dali.viewer.notebook-viewer
+                                               reval.dali.viewer.collection
+                                               reval.dali.viewer.collection-viewer
+                                               reval.dali.viewer.list
+                                               reval.page.viewer
+                                               reval.page.repl
+                                               reval.frepl],
+                                     :depends-on #{:ui-codemirror
+                                                   :main}},
+                          :ui-codemirror {:entries [ui.codemirror.api
+                                                    ui.codemirror.theme
+                                                    ui.codemirror.codemirror
+                                                    ui.codemirror.bound],
+                                          :depends-on #{:main}}},
+                :compiler-options {:optimizations :simple,
+                                   :output-feature-set :es8}},
+          :ci {:target :karma,
+               :output-to ".gorilla/ci.js",
+               :ns-regexp "-test$"}}}

@@ -1,0 +1,42 @@
+{:paths ["src"
+         "resources"
+         ".reval"]
+ :deps {org.clojure/clojure    {:mvn/version "1.12.4"}
+        nrepl/nrepl {:mvn/version "1.2.0"}
+        cider/cider-nrepl {:mvn/version "0.49.1"}
+        ; pink-gorilla deps
+        org.pinkgorilla/webly {:mvn/version "0.20.739"}
+        org.pinkgorilla/extension {:mvn/version "0.0.19"} ; extension config
+        org.pinkgorilla/modular {:mvn/version "0.5.80"} ; app start
+        org.pinkgorilla/token {:mvn/version "0.4.72"}
+        org.pinkgorilla/shadow-x {:mvn/version "0.3.27"}
+        org.pinkgorilla/ui-router {:mvn/version "0.3.46"}
+        org.pinkgorilla/css-theme {:mvn/version "0.1.13"}
+        org.pinkgorilla/transit-ajax {:mvn/version "0.1.11"} ; encoding
+        org.pinkgorilla/edn-x {:mvn/version "0.1.4"}
+        org.pinkgorilla/dali-table {:mvn/version "0.8.128"}
+        org.pinkgorilla/clj-service {:mvn/version "0.7.11"} ; newer version.  
+        org.pinkgorilla/clj-service-flowy {:mvn/version "0.2.50"}
+        org.pinkgorilla/reval {:mvn/version "0.20.203"}
+        org.pinkgorilla/ui-layout {:mvn/version "0.5.87"}
+        ; techml deps
+        techascent/tech.ml.dataset {:mvn/version "8.017"}
+        scicloj/tablecloth {:mvn/version "8.016"}
+        ;; quanta deps
+        io.github.clojure-quant/quanta-calendar {:mvn/version "0.6.29"}
+        io.github.clojure-quant/quanta-bar-warehouse {:mvn/version "0.7.77"}
+        io.github.clojure-quant/quanta-market {:mvn/version "0.7.197"} ; asset db + data feeds
+        io.github.clojure-quant/quanta-missionary {:mvn/version "0.1.6"}
+        ;io.github.clojure-quant/quanta-tradingview {:local/root "../tradingview" :deps/manifest :deps} 
+        }
+
+ :aliases
+ {; demo ui
+  :npm-install {:exec-fn webly.spa/webly-build
+                :exec-args {:config ["reval/demo-config.edn"]
+                            :profile "npm-install"}}
+
+  :watch {:exec-fn modular.system/start!
+          :exec-args {:profile "watch"
+                      :config  ["reval/demo-config.edn"]
+                      :services "reval/demo-services.edn"}}}}

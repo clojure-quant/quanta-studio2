@@ -1,0 +1,41 @@
+{:spa {:title "quanta-studio"
+       :mount-fn router.app/mount}
+ :reitit {:wrap quanta.studio.app/wrap}
+ :cljs-routes-reitit quanta.studio.app/routes
+ 
+ :theme {:codemirror "midnight"}
+
+ :reval {:rdocument {:fpath ".reval/public/rdocument"
+                     :rpath "/r/rdocument"
+                     :url-root "/api/rdocument/file/"}
+         :namespace-root ["notebook" 
+                          "quanta/algo"
+                          "quanta/notebook" 
+                          "quanta/recipy"
+                          "study"]
+         :clones-root ".reval/clones"}
+
+
+ :tradingview {:charts-path "./tv/chart/"
+               :template-path "/tv/template/"
+               :marks-path "/tv/mark/"
+               :config {:supports_time true  ; we send our server-time
+                        :supports_search true ;search and individual symbol resolve logic.
+                        :supports_marks false
+                        :supports_timescale_marks false
+                        :supports_group_request false
+                        :supported_resolutions ["D"] ; ["1" "5" "15" "30" "60" "1D" "1W" "1M"]
+                         ; exchanges and categories get set based on the asset db.
+                         ;:symbols_types [{:value "" :name "All"}
+                         ;                {:value ":equity" :name "Stocks"}
+                         ;                {:value ":etf" :name "ETF"}
+                         ;                {:value ":fx" :name "FX"}
+                         ;                {:value ":crypto" :name "Crypto"}
+                         ;                {:value ":crypto-future" :name "CryptoFuture"}]
+                         ;:exchanges [{:value "" :name "All Exchanges" :desc ""}
+                         ;            {:value "NASDAQ" :name "US Nasdaq" :desc ""}
+                         ;            {:value "NYSE" :name "US NYSE" :desc ""}]
+                        }
+               :events-path "./tv/events/"}
+;
+ }
