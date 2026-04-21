@@ -7,7 +7,7 @@
         ; pink-gorilla deps
         org.pinkgorilla/webly {:mvn/version "0.20.739"}
         org.pinkgorilla/extension {:mvn/version "0.0.19"} ; extension config
-        org.pinkgorilla/modular {:mvn/version "0.5.80"} ; app start
+        org.pinkgorilla/modular {:mvn/version "0.5.81"} ; app start
         org.pinkgorilla/token {:mvn/version "0.4.72"}
         org.pinkgorilla/shadow-x {:mvn/version "0.3.27"}
         org.pinkgorilla/ui-router {:mvn/version "0.3.46"}
@@ -17,7 +17,7 @@
         org.pinkgorilla/dali-table {:mvn/version "0.8.128"}
         org.pinkgorilla/clj-service {:mvn/version "0.7.11"} ; newer version.  
         org.pinkgorilla/clj-service-flowy {:mvn/version "0.2.50"}
-        org.pinkgorilla/reval {:mvn/version "0.20.203"}
+        org.pinkgorilla/reval {:mvn/version "0.20.204"}
         org.pinkgorilla/ui-layout {:mvn/version "0.5.87"}
         ; techml deps
         techascent/tech.ml.dataset {:mvn/version "8.017"}
@@ -25,9 +25,10 @@
         ;; quanta deps
         io.github.clojure-quant/quanta-calendar {:mvn/version "0.6.29"}
         io.github.clojure-quant/quanta-bar-warehouse {:mvn/version "0.7.77"}
-        io.github.clojure-quant/quanta-market {:mvn/version "0.7.197"} ; asset db + data feeds
-        io.github.clojure-quant/quanta-missionary {:mvn/version "0.1.6"}
-        ;io.github.clojure-quant/quanta-tradingview {:local/root "../tradingview" :deps/manifest :deps} 
+        io.github.clojure-quant/quanta-market {:mvn/version "0.7.202"} ; asset db + data feeds
+        io.github.clojure-quant/quanta-missionary {:mvn/version "0.1.8"}
+        ;io.github.clojure-quant/quanta-tradingview {:mvn/version "0.1.46"}
+        io.github.clojure-quant/quanta-tradingview {:local/root "../../quanta-tradingview/tradingview" :deps/manifest :deps} 
         }
 
  :aliases

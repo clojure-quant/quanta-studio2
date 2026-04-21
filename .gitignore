@@ -5,8 +5,11 @@ node_modules/
 karma.conf.js
 package.json
 package-lock.json
-.shadow-cljs.edn
+shadow-cljs.edn
 .calva/
 .gorilla/
 .flowy/
 .reval/
+.clj-kondo/
+.lsp/
+.cursor/

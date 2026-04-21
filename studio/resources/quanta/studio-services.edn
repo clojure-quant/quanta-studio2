@@ -10,10 +10,11 @@
   :techml-transit-handler {:start (cquant.transit.techml/add-techml-dataset-handlers!)}
   :techml-dali-converter {:start (rtable.default.dali-converter/add-techml-dali-converter)}
 
-
-  ;; reval
-  
-  :reval {:start (reval.config/configure-reval (:reval (clip/ref :config)))}
+  ;; reval 
+  :reval {:start (reval.config/configure-reval (:reval (clip/ref :config)))
+          :post-start (reval.namespace.clone/save-resource-notebooks-to-clone!)
+          }
+  ;:clone-resource-notebooks {:start }
 
   ;; quanta
   
@@ -26,17 +27,14 @@
                 :start (quanta.bar.db.duck/start-bardb-duck (modular.env/env "${QUANTASTORE}/bardb/eodhd.ddb"))
                 :stop (quanta.bar.db.duck/stop-bardb-duck this)}
 
-  :bardb-nippy-eodhd {:start (quanta.bar.db.nippy/start-bardb-nippy
-                              (modular.env/env "${QUANTASTORE}/bardb/eodhd-nippy/"))}
+  :bardb-nippy {:start (quanta.bar.db.nippy/start-bardb-nippy
+                        (modular.env/env "${QUANTASTORE}/bardb/eodhd-nippy/"))}
 
   :ss {:start (quanta.bar.split.service/start-split-service {:bardb (clip/ref :bar-db-duck)})}
-  :bar-db-ss (:barsource (clip/ref :ss))
+  :bar-db-ss {:start (:barsource (clip/ref :ss))}
 
-  :tradingview {:start (assoc (:tradingview (clip/ref :config))
-                              :charts-path (modular.env/env "${QUANTASTORE}/tv/chart/") 
-                              :template-path (modular.env/env "${QUANTASTORE}/tv/template/") 
-                              :marks-path (modular.env/env "${QUANTASTORE}/tv/mark/") 
-                              :events-path (modular.env/env "${QUANTASTORE}/tv/events/"))}
+  :tradingview {:start (quanta.tradingview.core/setup-tradingview
+                        (:tradingview (clip/ref :config)))}
   
   :eodhd-token {:start (:eodhd (clip/ref :config))}
   :eodhd {:start (quanta.market.adapter.eodhd.ds/create-import-eodhd (clip/ref :eodhd-token))}
@@ -47,6 +45,7 @@
   :ctx {:start {:asset-db (clip/ref :asset-db)
                 :bar-db  (clip/ref :bar-db-ss)
                 :bar-db-raw (clip/ref :bar-db-duck)
+                :ss (clip/ref :ss)
                 :eodhd (clip/ref :eodhd)
                 :eodhd-token (clip/ref :eodhd-token)
                 :tradingview (clip/ref :tradingview)}}

@@ -9,16 +9,19 @@
                      :rpath "/r/rdocument"
                      :url-root "/api/rdocument/file/"}
          :namespace-root ["notebook" 
-                          "quanta/algo"
                           "quanta/notebook" 
                           "quanta/recipy"
+                          "algo"
                           "study"]
          :clones-root ".reval/clones"}
 
 
- :tradingview {:charts-path "./tv/chart/"
-               :template-path "/tv/template/"
-               :marks-path "/tv/mark/"
+ :tradingview {:charts-path "${QUANTASTORE}/tv/chart/"
+               :template-path "${QUANTASTORE}/tv/template/"
+               :marks-path "${QUANTASTORE}/tv/mark/"
+               :events-path "${QUANTASTORE}/tv/events/"
+               :default {:client-id "tradingview.com"
+                         :user-id "user-444"}
                :config {:supports_time true  ; we send our server-time
                         :supports_search true ;search and individual symbol resolve logic.
                         :supports_marks false
@@ -35,7 +38,6 @@
                          ;:exchanges [{:value "" :name "All Exchanges" :desc ""}
                          ;            {:value "NASDAQ" :name "US Nasdaq" :desc ""}
                          ;            {:value "NYSE" :name "US NYSE" :desc ""}]
-                        }
-               :events-path "./tv/events/"}
+                        }}
 ;
  }
