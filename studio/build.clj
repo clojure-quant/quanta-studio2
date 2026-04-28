@@ -3,8 +3,8 @@
    [org.corfield.build :as bb] ; https://github.com/seancorfield/build-clj
    [clojure.tools.build.api :as b]))
 
-(def lib 'io.github.clojure-quant/quanta-studio2)
-(def version (format "0.1.%s" (b/git-count-revs nil)))
+(def lib 'io.github.clojure-quant/quanta-studio)
+(def version (format "0.5.%s" (b/git-count-revs nil)))
 
 (defn jar [opts]
   (-> opts
